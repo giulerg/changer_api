@@ -1,0 +1,17 @@
+# Airflow runtime data
+logs/
+plugins/__pycache__/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment
+.env
+
+# Airflow metadata DB (если локальная)
+airflow.db
+
+# IDE
+.vscode/
+.idea/
