@@ -1,0 +1,9 @@
+CREATE SCHEMA IF NOT EXISTS currency;
+
+CREATE TABLE IF NOT EXISTS currency.raw_data (
+    id SERIAL PRIMARY KEY,
+    data JSONB NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+
