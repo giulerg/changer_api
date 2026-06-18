@@ -6,7 +6,8 @@ import logging
 
 from src.services.extractor import Extractor
 from src.services.row_data_saver import RowDataSaver
- 
+from src.services.transform import Transform
+
 
 with DAG(
     dag_id = "currency_dag",
@@ -26,12 +27,14 @@ with DAG(
     def load_raw(data:dict|None):
         return RowDataSaver().run(data)
 
+    @task(task_id="transdorm")
+    def transfrom():
+        return Transform().run()
     
     extract_task = extract()
     load_raw_task = load_raw(extract_task)
+    transform_task = transfrom()
 
-    extract_task >> load_raw_task
-# extract
-# load_raw
-# ttansform
+    extract_task >> load_raw_task >> transform_task
+ 
 # detect_anomalies

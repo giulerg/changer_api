@@ -1,17 +1,16 @@
 import json
-from airflow.providers.postgres.hooks.postgres import PostgresHook
+from .postgress_service import PostgresService
 
 class RowDataSaver:
+    def __init__(self):
+         self.db = PostgresService()
+
     def run(self, data:dict):
-        pg_hook = PostgresHook(postgres_conn_id="currency_db")
-        conn = pg_hook.get_conn();
-        try:
-            with conn.cursor() as cursor:
-                cursor.execute(
-                    "INSERT INTO currency.raw_data (data) VALUES (%s)", 
-                    (json.dumps(data),)
-                )
-            conn.commit()
-        finally:
-                cursor.close()
-                conn.close()
+        return self.db.execute(
+            "INSERT INTO currency.raw_data (data) VALUES (%s)",
+            (json.dumps(data),)
+        )
+    
+
+    
+     
